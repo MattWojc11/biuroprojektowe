@@ -9,25 +9,25 @@ const galleryItems = [
     id: 1,
     title: 'Modern Living Room',
     category: 'Interior',
-    image: 'https://picsum.photos/id/1048/800/600'
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c'
   },
   {
     id: 2,
     title: 'Minimalist Kitchen',
     category: 'Interior',
-    image: 'https://picsum.photos/id/1040/800/600'
+    image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3'
   },
   {
     id: 3,
     title: 'Contemporary Facade',
     category: 'Exterior',
-    image: 'https://picsum.photos/id/1029/800/600'
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c'
   },
   {
     id: 4,
     title: 'Garden Design',
     category: 'Landscape',
-    image: 'https://picsum.photos/id/1039/800/600'
+    image: 'https://images.unsplash.com/photo-1600573472591-ee6c8e695481'
   }
 ]
 

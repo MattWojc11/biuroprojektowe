@@ -94,12 +94,12 @@ export default function PriceCalculator() {
     sustainableFeatures: false
   })
 
-  const [squareMeters, setSquareMeters] = useState(150)
+  const [squareFeet, setSquareFeet] = useState(1500)
   const [showTooltip, setShowTooltip] = useState<string | null>(null)
   const [animatePrice, setAnimatePrice] = useState(false)
 
   const calculatePrice = () => {
-    let price = squareMeters * basePrice[options.houseType as keyof typeof basePrice]
+    let price = squareFeet * basePrice[options.houseType as keyof typeof basePrice]
     price *= styleMultiplier[options.style as keyof typeof styleMultiplier]
     price *= (1 + (options.floors - 1) * 0.15)
     price += options.rooms * 15000
@@ -118,7 +118,7 @@ export default function PriceCalculator() {
     setAnimatePrice(true)
     const timer = setTimeout(() => setAnimatePrice(false), 600)
     return () => clearTimeout(timer)
-  }, [options, squareMeters])
+  }, [options, squareFeet])
 
   const estimatedPrice = calculatePrice()
 
@@ -173,22 +173,22 @@ export default function PriceCalculator() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            {/* Square Meters Slider */}
+            {/* Square Feet Slider */}
             <div>
               <label className="block text-text-primary mb-4 text-lg">House Size</label>
               <div className="relative glass-card p-6">
                 <input
                   type="range"
-                  min="100"
-                  max="500"
-                  value={squareMeters}
-                  onChange={(e) => setSquareMeters(Number(e.target.value))}
+                  min="1000"
+                  max="5000"
+                  value={squareFeet}
+                  onChange={(e) => setSquareFeet(Number(e.target.value))}
                   className="w-full h-2 bg-background-card rounded-lg appearance-none cursor-pointer accent-accent"
                 />
                 <div className="flex justify-between text-text-secondary mt-4">
-                  <span>100 m²</span>
-                  <span className="text-accent font-bold">{squareMeters} m²</span>
-                  <span>500 m²</span>
+                  <span>1,000 sq ft</span>
+                  <span className="text-accent font-bold">{squareFeet.toLocaleString()} sq ft</span>
+                  <span>5,000 sq ft</span>
                 </div>
               </div>
             </div>
@@ -372,8 +372,8 @@ export default function PriceCalculator() {
 
               <div className="space-y-4 mb-8">
                 <div className="flex justify-between text-text-secondary">
-                  <span>Base Price ({squareMeters} m²)</span>
-                  <span>${(squareMeters * basePrice[options.houseType as keyof typeof basePrice]).toLocaleString()}</span>
+                  <span>Base Price ({squareFeet.toLocaleString()} sq ft)</span>
+                  <span>${(squareFeet * basePrice[options.houseType as keyof typeof basePrice] * 0.092903).toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-text-secondary">
                   <span>Style Level ({options.style})</span>
