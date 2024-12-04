@@ -1,6 +1,5 @@
 import Hero from '@/components/layout/Hero'
 import ServicesOverview from '@/components/features/ServicesOverview'
-import ProjectShowcase from '@/components/features/ProjectShowcase'
 import Statistics from '@/components/features/Statistics'
 import Process from '@/components/features/Process'
 import Testimonials from '@/components/features/Testimonials'
@@ -15,7 +14,6 @@ export default function Home() {
       <ServicesOverview />
       <Statistics />
       <InteractiveGallery />
-      <ProjectShowcase />
       <Process />
       <Testimonials />
       <PriceCalculator />
