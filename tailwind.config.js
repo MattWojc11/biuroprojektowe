@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -30,14 +30,9 @@ export default {
           hover: 'rgba(255, 255, 255, 0.2)'
         }
       },
-      keyframes: {
-        shimmer: {
-          '100%': { transform: 'translateX(100%)' }
-        }
+      fontFamily: {
+        sans: ['var(--font-inter)'],
       },
-      animation: {
-        shimmer: 'shimmer 2s infinite'
-      }
     },
   },
   plugins: [],
