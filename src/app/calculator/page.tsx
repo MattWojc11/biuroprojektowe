@@ -87,6 +87,10 @@ export default function CalculatorPage() {
   const [squareFeet, setSquareFeet] = useState(1500)
   const [showTooltip, setShowTooltip] = useState<string | null>(null)
   const [animatePrice, setAnimatePrice] = useState(false)
+  const [formattedValues, setFormattedValues] = useState({
+    squareFeet: '1500',
+    price: '0'
+  })
 
   const calculatePrice = () => {
     let price = squareFeet * (basePrice[options.houseType as keyof typeof basePrice])
@@ -107,30 +111,39 @@ export default function CalculatorPage() {
     return () => clearTimeout(timer)
   }, [options, squareFeet])
 
+  const formatNumber = (num: number) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
+  useEffect(() => {
+    setFormattedValues({
+      squareFeet: formatNumber(squareFeet),
+      price: formatNumber(calculatePrice())
+    })
+  }, [squareFeet, options])
+
   const estimatedPrice = calculatePrice()
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-background-light">
       {/* Hero Section */}
-      <div className="relative h-[50vh] overflow-hidden">
+      <div className="relative h-[40vh] md:h-[50vh] overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=2070')] bg-cover bg-center bg-no-repeat" />
           <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
-          <Link href="/" className="text-accent hover:text-accent-hover flex items-center gap-2 mb-12">
+        <div className="relative container mx-auto px-4 h-full flex flex-col justify-center">
+          <Link href="/" className="text-accent hover:text-accent-hover flex items-center gap-2 mb-6 md:mb-12">
             <ArrowLeft size={20} />
             Back to Home
           </Link>
           <motion.h1 
-            className="text-6xl font-bold text-text-primary mb-6"
+            className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-4 md:mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
             Project Calculator
           </motion.h1>
           <motion.p 
-            className="text-xl text-text-secondary max-w-2xl"
+            className="text-base md:text-lg lg:text-xl text-text-secondary max-w-2xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -140,18 +153,18 @@ export default function CalculatorPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 relative z-10 pb-24">
-        <div className="grid lg:grid-cols-2 gap-12">
+      <div className="container mx-auto px-4 -mt-16 md:-mt-20 relative z-10 pb-12 md:pb-24">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-12">
           {/* Calculator Form */}
           <motion.div 
-            className="glass-card p-8"
+            className="glass-card p-4 md:p-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
             {/* Square Feet Slider */}
-            <div className="mb-12">
-              <label className="block text-text-primary mb-6 text-lg font-medium">House Size</label>
+            <div className="mb-8 md:mb-12">
+              <label className="block text-text-primary mb-4 md:mb-6 text-base md:text-lg font-medium">House Size</label>
               <div className="relative">
                 <input
                   type="range"
@@ -161,13 +174,13 @@ export default function CalculatorPage() {
                   onChange={(e) => setSquareFeet(Number(e.target.value))}
                   className="w-full h-2 bg-background-card rounded-lg appearance-none cursor-pointer accent-accent"
                 />
-                <div className="flex justify-between text-text-secondary mt-4">
+                <div className="flex justify-between text-text-secondary mt-4 text-sm md:text-base">
                   <span>1,000 sq ft</span>
                   <motion.span 
-                    className="text-accent font-bold text-lg"
+                    className="text-accent font-bold text-base md:text-lg"
                     animate={animatePrice ? { scale: [1, 1.2, 1] } : {}}
                   >
-                    {squareFeet.toLocaleString()} sq ft
+                    {formattedValues.squareFeet} sq ft
                   </motion.span>
                   <span>5,000 sq ft</span>
                 </div>
@@ -175,68 +188,99 @@ export default function CalculatorPage() {
             </div>
 
             {/* House Type */}
-            <div className="mb-12">
-              <label className="block text-text-primary mb-6 text-lg font-medium">House Type</label>
-              <div className="grid grid-cols-3 gap-4">
+            <div className="mb-8 md:mb-12">
+              <label className="block text-text-primary mb-4 md:mb-6 text-base md:text-lg font-medium">House Type</label>
+              <div className="grid grid-cols-3 gap-2 md:gap-4">
                 {[
-                  { value: 'modern', label: 'Modern', icon: <Building className="w-6 h-6" /> },
-                  { value: 'traditional', label: 'Traditional', icon: <Home className="w-6 h-6" /> },
-                  { value: 'minimalist', label: 'Minimalist', icon: <Ruler className="w-6 h-6" /> }
+                  { value: 'modern', label: 'Modern', icon: <Building className="w-5 h-5 md:w-6 md:h-6" /> },
+                  { value: 'traditional', label: 'Traditional', icon: <Home className="w-5 h-5 md:w-6 md:h-6" /> },
+                  { value: 'minimalist', label: 'Minimalist', icon: <Ruler className="w-5 h-5 md:w-6 md:h-6" /> }
                 ].map((type) => (
                   <button
                     key={type.value}
                     onClick={() => setOptions({...options, houseType: type.value})}
-                    className={`glass-card p-6 transition-all duration-300 ${
-                      options.houseType === type.value 
-                        ? 'ring-2 ring-accent bg-accent/10' 
-                        : 'hover:bg-background-card'
+                    className={`bg-[#1e293b] border border-white/10 rounded-lg p-3 md:p-4 flex flex-col items-center gap-2 transition-colors hover:bg-accent/5 ${
+                      options.houseType === type.value ? 'ring-2 ring-accent bg-accent/10' : ''
                     }`}
                   >
-                    <div className="flex flex-col items-center gap-3">
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                        options.houseType === type.value ? 'bg-accent text-white' : 'bg-accent/10 text-accent'
-                      }`}>
-                        {type.icon}
-                      </div>
-                      <span className={`font-medium ${
-                        options.houseType === type.value ? 'text-accent' : 'text-text-primary'
-                      }`}>
-                        {type.label}
-                      </span>
-                    </div>
+                    {type.icon}
+                    <span className="text-xs md:text-sm">{type.label}</span>
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Style Level */}
-            <div className="mb-12">
-              <label className="block text-text-primary mb-6 text-lg font-medium">Style Level</label>
-              <div className="grid grid-cols-3 gap-4">
+            {/* Style */}
+            <div className="mb-8 md:mb-12">
+              <label className="block text-text-primary mb-4 md:mb-6 text-base md:text-lg font-medium">Style</label>
+              <div className="grid grid-cols-3 gap-2 md:gap-4">
                 {[
-                  { value: 'standard', label: 'Standard', description: 'Quality materials' },
-                  { value: 'premium', label: 'Premium', description: 'High-end finishes' },
-                  { value: 'luxury', label: 'Luxury', description: 'Exclusive design' }
+                  { value: 'standard', label: 'Standard' },
+                  { value: 'premium', label: 'Premium' },
+                  { value: 'luxury', label: 'Luxury' }
                 ].map((style) => (
                   <button
                     key={style.value}
                     onClick={() => setOptions({...options, style: style.value})}
-                    className={`glass-card p-6 transition-all duration-300 ${
-                      options.style === style.value 
-                        ? 'ring-2 ring-accent bg-accent/10' 
-                        : 'hover:bg-background-card'
+                    className={`bg-[#1e293b] border border-white/10 rounded-lg p-3 md:p-4 text-center transition-colors hover:bg-accent/5 ${
+                      options.style === style.value ? 'ring-2 ring-accent bg-accent/10' : ''
                     }`}
                   >
-                    <div className="text-center">
-                      <div className={`font-medium mb-2 ${
-                        options.style === style.value ? 'text-accent' : 'text-text-primary'
-                      }`}>
-                        {style.label}
-                      </div>
-                      <p className="text-sm text-text-secondary">
-                        {style.description}
-                      </p>
-                    </div>
+                    <span className="text-xs md:text-sm">{style.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Floors and Rooms */}
+            <div className="grid grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-12">
+              <div>
+                <label className="block text-text-primary mb-4 text-base md:text-lg font-medium">Floors</label>
+                <div className="flex gap-2">
+                  {[1, 2, 3].map((num) => (
+                    <button
+                      key={num}
+                      onClick={() => setOptions({...options, floors: num})}
+                      className={`bg-[#1e293b] border border-white/10 rounded-lg flex-1 p-2 md:p-3 text-center transition-colors hover:bg-accent/5 ${
+                        options.floors === num ? 'ring-2 ring-accent bg-accent/10' : ''
+                      }`}
+                    >
+                      <span className="text-xs md:text-sm">{num}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="block text-text-primary mb-4 text-base md:text-lg font-medium">Rooms</label>
+                <div className="flex gap-2">
+                  {[2, 3, 4, 5].map((num) => (
+                    <button
+                      key={num}
+                      onClick={() => setOptions({...options, rooms: num})}
+                      className={`bg-[#1e293b] border border-white/10 rounded-lg flex-1 p-2 md:p-3 text-center transition-colors hover:bg-accent/5 ${
+                        options.rooms === num ? 'ring-2 ring-accent bg-accent/10' : ''
+                      }`}
+                    >
+                      <span className="text-xs md:text-sm">{num}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Bathrooms */}
+            <div className="mb-8 md:mb-12">
+              <label className="block text-text-primary mb-4 text-base md:text-lg font-medium">Bathrooms</label>
+              <div className="flex gap-2 md:gap-4">
+                {[1, 2, 3, 4].map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => setOptions({...options, bathrooms: num})}
+                    className={`bg-[#1e293b] border border-white/10 rounded-lg flex-1 p-2 md:p-3 text-center transition-colors hover:bg-accent/5 ${
+                      options.bathrooms === num ? 'ring-2 ring-accent bg-accent/10' : ''
+                    }`}
+                  >
+                    <span className="text-xs md:text-sm">{num}</span>
                   </button>
                 ))}
               </div>
@@ -244,57 +288,35 @@ export default function CalculatorPage() {
 
             {/* Additional Features */}
             <div>
-              <label className="block text-text-primary mb-6 text-lg font-medium">Additional Features</label>
-              <div className="grid grid-cols-2 gap-4">
+              <label className="block text-text-primary mb-4 text-base md:text-lg font-medium">Additional Features</label>
+              <div className="grid grid-cols-2 gap-2 md:gap-4">
                 {features.map((feature) => (
                   <button
                     key={feature.key}
                     onClick={() => setOptions({
                       ...options,
-                      [feature.key]: !options[feature.key as keyof CalculatorOptions]
+                      [feature.key]: !options[feature.key as keyof typeof options]
                     })}
                     onMouseEnter={() => setShowTooltip(feature.key)}
                     onMouseLeave={() => setShowTooltip(null)}
-                    className={`glass-card p-6 text-left transition-all duration-300 relative ${
-                      options[feature.key as keyof CalculatorOptions]
-                        ? 'ring-2 ring-accent bg-accent/10'
-                        : 'hover:bg-background-card'
+                    className={`bg-[#1e293b] border border-white/10 rounded-lg p-3 md:p-4 flex items-center gap-2 md:gap-3 transition-colors hover:bg-accent/5 relative ${
+                      options[feature.key as keyof typeof options] ? 'ring-2 ring-accent bg-accent/10' : ''
                     }`}
                   >
-                    <div className="flex items-center gap-4">
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                        options[feature.key as keyof CalculatorOptions]
-                          ? 'bg-accent text-white'
-                          : 'bg-accent/10 text-accent'
-                      }`}>
-                        {feature.icon}
-                      </div>
-                      <div>
-                        <div className={`font-medium ${
-                          options[feature.key as keyof CalculatorOptions]
-                            ? 'text-accent'
-                            : 'text-text-primary'
-                        }`}>
-                          {feature.label}
-                        </div>
-                        <div className="text-sm text-text-secondary">
-                          +${feature.price.toLocaleString()}
-                        </div>
-                      </div>
-                      <Info 
-                        size={16} 
-                        className="ml-auto text-text-secondary"
-                      />
-                    </div>
+                    {feature.icon}
+                    <span className="text-xs md:text-sm">{feature.label}</span>
+                    <Info className="w-4 h-4 ml-auto text-text-secondary" />
+                    
                     <AnimatePresence>
                       {showTooltip === feature.key && (
                         <motion.div
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
-                          className="absolute top-full left-0 mt-2 p-4 glass-card text-sm text-text-secondary shadow-lg z-10 w-full"
+                          className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 glass-card p-2 md:p-3 text-xs md:text-sm whitespace-nowrap z-10"
                         >
                           {feature.info}
+                          <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 rotate-45 bg-background-card" />
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -304,62 +326,31 @@ export default function CalculatorPage() {
             </div>
           </motion.div>
 
-          {/* Price Summary */}
+          {/* Price Display */}
           <motion.div 
-            className="lg:sticky lg:top-24 h-fit"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+            className="glass-card p-4 md:p-8 flex flex-col justify-center items-center text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            <div className="glass-card p-8">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
-                  <Calculator className="w-6 h-6 text-accent" />
-                </div>
-                <h2 className="text-2xl font-bold text-text-primary">Price Estimate</h2>
-              </div>
-              
-              <motion.div
-                className="text-6xl font-bold gradient-text mb-12"
-                animate={animatePrice ? { scale: [1, 1.1, 1] } : {}}
-                transition={{ duration: 0.4 }}
-              >
-                ${estimatedPrice.toLocaleString()}
-              </motion.div>
-
-              <div className="space-y-6 mb-12">
-                {/* Price Breakdown */}
-                <div className="space-y-4">
-                  <div className="flex justify-between text-text-secondary">
-                    <span>Base Price ({squareFeet.toLocaleString()} sq ft)</span>
-                    <span>${(squareFeet * basePrice[options.houseType as keyof typeof basePrice] * 0.092903).toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between text-text-secondary">
-                    <span>Style Level ({options.style})</span>
-                    <span>+{((styleMultiplier[options.style as keyof typeof styleMultiplier] - 1) * 100).toFixed(0)}%</span>
-                  </div>
-                  {features.map(feature => (
-                    options[feature.key as keyof CalculatorOptions] && (
-                      <div key={feature.key} className="flex justify-between text-text-secondary">
-                        <span>{feature.label}</span>
-                        <span>+${feature.price.toLocaleString()}</span>
-                      </div>
-                    )
-                  ))}
-                </div>
-              </div>
-
-              <Link
-                href="/contact"
-                className="button-primary w-full flex items-center justify-center gap-2 group"
-              >
-                Get Detailed Quote
-                <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform" />
-              </Link>
-              <p className="text-text-secondary text-sm text-center mt-4">
-                * This is an estimate. Final price may vary based on specific requirements and location.
-              </p>
-            </div>
+            <Calculator className="w-12 h-12 md:w-16 md:h-16 text-accent mb-4 md:mb-6" />
+            <h2 className="text-lg md:text-xl font-medium text-text-primary mb-2 md:mb-4">Estimated Project Cost</h2>
+            <motion.div 
+              className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-4 md:mb-6"
+              animate={animatePrice ? { scale: [1, 1.1, 1] } : {}}
+            >
+              ${formattedValues.price}
+            </motion.div>
+            <p className="text-sm md:text-base text-text-secondary max-w-md">
+              This is an estimated cost based on your selections. Contact us for a detailed quote.
+            </p>
+            <Link 
+              href="/contact" 
+              className="mt-6 md:mt-8 flex items-center gap-2 bg-accent hover:bg-accent-hover text-white px-6 py-3 rounded-lg transition-colors"
+            >
+              <Plus size={20} />
+              Get Detailed Quote
+            </Link>
           </motion.div>
         </div>
       </div>

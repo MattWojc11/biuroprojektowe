@@ -103,7 +103,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-background-light">
       {/* Hero Section */}
-      <div className="relative min-h-screen overflow-hidden flex items-center">
+      <div className="relative min-h-[60vh] md:min-h-screen overflow-hidden flex items-center">
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070"
@@ -115,15 +115,15 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
         </div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="grid lg:grid-cols-2 gap-16">
+        <div className="relative z-10 container mx-auto px-4 py-12 md:py-24">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-16">
             <div>
-              <Link href="/" className="text-accent hover:text-accent-hover flex items-center gap-2 mb-12">
+              <Link href="/" className="text-accent hover:text-accent-hover flex items-center gap-2 mb-8 md:mb-12">
                 <ArrowLeft size={20} />
                 Back to Home
               </Link>
               <motion.h1 
-                className="text-8xl font-bold mb-8 leading-tight"
+                className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-8 leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
@@ -132,7 +132,7 @@ export default function AboutPage() {
                 Spaces
               </motion.h1>
               <motion.p 
-                className="text-xl text-text-secondary max-w-2xl"
+                className="text-base md:text-lg lg:text-xl text-text-secondary max-w-2xl"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
@@ -141,7 +141,7 @@ export default function AboutPage() {
               </motion.p>
             </div>
             
-            <div className="hidden lg:grid grid-cols-2 gap-4 self-center">
+            <div className="grid grid-cols-2 gap-3 md:gap-4 self-center">
               {[
                 { label: 'Projects', value: '500+' },
                 { label: 'Years', value: '20+' },
@@ -150,13 +150,13 @@ export default function AboutPage() {
               ].map((stat, index) => (
                 <motion.div
                   key={index}
-                  className="glass-card p-6 text-center"
+                  className="glass-card p-3 md:p-6 text-center"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 * index }}
                 >
-                  <div className="text-3xl font-bold gradient-text mb-2">{stat.value}</div>
-                  <div className="text-text-secondary">{stat.label}</div>
+                  <div className="text-xl md:text-2xl lg:text-3xl font-bold gradient-text mb-1 md:mb-2">{stat.value}</div>
+                  <div className="text-sm md:text-base text-text-secondary">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -165,36 +165,36 @@ export default function AboutPage() {
       </div>
 
       {/* Values Section */}
-      <div className="relative py-32 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative py-12 md:py-32 overflow-hidden">
+        <div className="container mx-auto px-4">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-8 md:mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold mb-4">Our Values</h2>
-            <p className="text-text-secondary max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">Our Values</h2>
+            <p className="text-sm md:text-base text-text-secondary max-w-2xl mx-auto">
               The principles that guide our work and define our approach to architecture.
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid sm:grid-cols-2 gap-4 md:gap-8">
             {values.map((value, index) => (
               <motion.div
                 key={index}
-                className="glass-card p-8 flex gap-6 items-start group hover:bg-accent/5 transition-colors"
+                className="glass-card p-4 md:p-8 flex gap-3 md:gap-6 items-start group hover:bg-accent/5 transition-colors"
                 initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="w-16 h-16 rounded-2xl bg-accent/10 flex-shrink-0 flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
+                <div className="w-10 h-10 md:w-16 md:h-16 rounded-2xl bg-accent/10 flex-shrink-0 flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
                   {value.icon}
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-text-primary mb-2">{value.title}</h3>
-                  <p className="text-text-secondary">{value.description}</p>
+                  <h3 className="text-lg md:text-xl font-bold text-text-primary mb-2">{value.title}</h3>
+                  <p className="text-sm md:text-base text-text-secondary">{value.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -203,44 +203,42 @@ export default function AboutPage() {
       </div>
 
       {/* Team Section */}
-      <div className="relative py-32 bg-background-light/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative py-12 md:py-32 bg-background-light">
+        <div className="container mx-auto px-4">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-8 md:mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold mb-4">Meet Our Team</h2>
-            <p className="text-text-secondary max-w-2xl mx-auto">
-              The creative minds behind our architectural masterpieces.
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">Our Team</h2>
+            <p className="text-sm md:text-base text-text-secondary max-w-2xl mx-auto">
+              Meet the experts behind our architectural masterpieces.
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-3 gap-16">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {teamMembers.map((member, index) => (
               <motion.div
                 key={index}
-                className="relative group"
+                className="glass-card overflow-hidden group"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="relative h-[400px] rounded-lg overflow-hidden mb-6">
+                <div className="relative aspect-[3/4]">
                   <Image
                     src={member.image}
                     alt={member.name}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-center transform translate-y-10 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all">
-                  <div className="glass-card p-6">
-                    <h3 className="text-xl font-bold text-text-primary mb-1">{member.name}</h3>
-                    <div className="text-accent mb-4">{member.role}</div>
-                    <p className="text-text-secondary">{member.description}</p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                  <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-end">
+                    <h3 className="text-lg md:text-xl font-bold text-text-primary">{member.name}</h3>
+                    <p className="text-sm md:text-base text-accent">{member.role}</p>
+                    <p className="text-sm md:text-base text-text-secondary mt-2">{member.description}</p>
                   </div>
                 </div>
               </motion.div>
@@ -249,76 +247,72 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Our Journey */}
-      <div className="relative py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold text-center mb-16">Our Journey</h2>
-            <div className="relative">
-              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-accent/20" />
-              <div className="space-y-24">
-                {milestones.map((milestone, index) => (
-                  <motion.div
-                    key={index}
-                    className={`flex items-center gap-8 ${
-                      index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                    }`}
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <div className="flex-1 glass-card p-8">
-                      <div className="text-accent mb-2">{milestone.year}</div>
-                      <h3 className="text-xl font-bold text-text-primary mb-4">{milestone.title}</h3>
-                      <p className="text-text-secondary">{milestone.description}</p>
-                    </div>
-                    <div className="w-4 h-4 rounded-full bg-accent relative z-10" />
-                    <div className="flex-1" />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Expertise Section */}
-      <div className="relative py-32 bg-background-light/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Timeline Section */}
+      <div className="relative py-12 md:py-32">
+        <div className="container mx-auto px-4">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-8 md:mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold mb-4">Our Expertise</h2>
-            <p className="text-text-secondary max-w-2xl mx-auto">
-              Specialized knowledge and experience across various architectural domains.
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">Our Journey</h2>
+            <p className="text-sm md:text-base text-text-secondary max-w-2xl mx-auto">
+              Two decades of architectural innovation and excellence.
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-3 gap-12">
-            {expertise.map((area, index) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+            {milestones.map((milestone, index) => (
               <motion.div
                 key={index}
-                className="glass-card p-8"
+                className="glass-card p-4 md:p-6"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <h3 className="text-2xl font-bold text-text-primary mb-4">{area.title}</h3>
-                <p className="text-text-secondary mb-8">{area.description}</p>
-                <div className="grid grid-cols-2 gap-4">
-                  {area.stats.map((stat, idx) => (
-                    <div key={idx} className="glass-card p-4 text-center">
-                      <div className="text-2xl font-bold gradient-text mb-2">{stat.value}</div>
-                      <div className="text-sm text-text-secondary">{stat.label}</div>
+                <div className="text-2xl md:text-3xl font-bold gradient-text mb-2 md:mb-3">{milestone.year}</div>
+                <h3 className="text-lg md:text-xl font-bold text-text-primary mb-2">{milestone.title}</h3>
+                <p className="text-sm md:text-base text-text-secondary">{milestone.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Expertise Section */}
+      <div className="relative py-12 md:py-32 bg-background-light">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="text-center mb-8 md:mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">Our Expertise</h2>
+            <p className="text-sm md:text-base text-text-secondary max-w-2xl mx-auto">
+              Specialized knowledge and experience across various architectural domains.
+            </p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+            {expertise.map((item, index) => (
+              <motion.div
+                key={index}
+                className="glass-card p-4 md:p-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <h3 className="text-lg md:text-xl font-bold text-text-primary mb-2">{item.title}</h3>
+                <p className="text-sm md:text-base text-text-secondary mb-4 md:mb-6">{item.description}</p>
+                <div className="grid grid-cols-2 gap-3 md:gap-4">
+                  {item.stats.map((stat, idx) => (
+                    <div key={idx} className="text-center">
+                      <div className="text-xl md:text-2xl font-bold gradient-text mb-1">{stat.value}</div>
+                      <div className="text-xs md:text-sm text-text-secondary">{stat.label}</div>
                     </div>
                   ))}
                 </div>
@@ -329,7 +323,7 @@ export default function AboutPage() {
       </div>
 
       {/* CTA Section */}
-      <div className="relative py-32 overflow-hidden">
+      <div className="relative py-12 md:py-32 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2053"
@@ -340,14 +334,14 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-5xl font-bold mb-6">Ready to Create Something Amazing?</h2>
-            <p className="text-text-secondary mb-12 max-w-2xl mx-auto text-lg">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Ready to Create Something Amazing?</h2>
+            <p className="text-sm md:text-base text-text-secondary mb-12 max-w-2xl mx-auto text-lg">
               Let&apos;s collaborate to bring your architectural vision to life. Our team is ready 
               to create something extraordinary together.
             </p>
